@@ -100,8 +100,9 @@ a {
 .hero h1 {
   margin: 0;
   font-family: 'Playfair Display', serif;
+  color:#F5EFE7;
   font-size: clamp(42px, 6vw, 76px);
-  font-weight: 400;
+  font-weight: 380;
   line-height: 1.12;
 }
 
@@ -258,8 +259,8 @@ a {
   width: 100%;
   box-sizing: border-box;
   margin: 0;
-  background: rgba(107, 112, 55, 0.68) !important;
-  color: #ffffff !important;
+  background: rgba(89, 90, 72, 0.68) !important;
+  color: #f5e9e9 !important;
   opacity: 1;
   text-shadow: none;
 }
@@ -501,3 +502,14 @@ a {
     gap: 12px;
   }
 }
+
+.hero-tagline {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #eafa04;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+

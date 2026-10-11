@@ -1,26 +1,35 @@
-import './index.css';
+
 import "./App.css";
 import { Link, Routes, Route } from "react-router-dom";
 import DestinationPage from "./DestinationPage";
+import ActivitiesPage from "./ActivitiesPage";
+import PlanTripPage from "./PlanTripPage";
 
-function HomePage()  {
+function HomePage() {
   return (
     <div className="website">
       <nav className="navbar">
-        <a href="#" className="logo">The World, by Me</a>
+        <Link to="/" className="logo">
+          The World, by Me
+        </Link>
 
         <div className="nav-links">
           <a href="#destinations">Explore</a>
           <a href="#stories">Stories</a>
-          <a href="#planner">Plan a Trip</a>
+          <Link to="/plan-trip">Plan a Trip</Link>
+          <Link to="/activities">Activities</Link>
         </div>
       </nav>
 
       <header className="hero">
         <div className="hero-content">
-          <p className="eyebrow">A WORLD OF POSSIBILITIES</p>
+          <p className="hero-tagline">
+            TRAVEL · DISCOVER · BEGIN AGAIN
+          </p>
 
-          <h1>Somewhere beautiful is waiting.</h1>
+          <h1>
+            Your next chapter might begin somewhere beautiful
+          </h1>
 
           <p className="hero-description">
             Discover inspiring destinations, thoughtful travel guides,
@@ -44,37 +53,58 @@ function HomePage()  {
           </p>
 
           <div className="destination-grid">
-            <Link to="/destinations/kyoto" className="destination-card kyoto">
+            <Link
+              to="/destinations/kyoto"
+              className="destination-card kyoto"
+            >
               <h3>Kyoto, Japan</h3>
               <p>Tradition in every little detail.</p>
             </Link>
 
-            <Link to="/destinations/bali" className="destination-card bali">
+            <Link
+              to="/destinations/bali"
+              className="destination-card bali"
+            >
               <h3>Bali, Indonesia</h3>
               <p>Slow mornings and tropical escapes.</p>
             </Link>
 
-            <Link to="/destinations/paris"  className="destination-card paris">
+            <Link
+              to="/destinations/paris"
+              className="destination-card paris"
+            >
               <h3>Paris, France</h3>
               <p>Romance around every corner.</p>
             </Link>
 
-           <Link to="/destinations/rome" className="destination-card rome">
+            <Link
+              to="/destinations/rome"
+              className="destination-card rome"
+            >
               <h3>Rome, Italy</h3>
               <p>History, art, and unforgettable evenings.</p>
             </Link>
 
-            <Link to="/destinations/seoul"  className="destination-card seoul">
+            <Link
+              to="/destinations/seoul"
+              className="destination-card seoul"
+            >
               <h3>Seoul, South Korea</h3>
-              <p>A vibrant city where tradition meets modern life.</p>
+              <p>
+                A vibrant city where tradition meets modern life.
+              </p>
             </Link>
 
-            <Link to="/destinations/singapore"  className="destination-card singapore">
+            <Link
+              to="/destinations/singapore"
+              className="destination-card singapore"
+            >
               <h3>Singapore</h3>
-              <p>A little island filled with extraordinary experiences.</p>
+              <p>
+                A little island filled with extraordinary experiences.
+              </p>
             </Link>
           </div>
-
         </section>
 
         <section id="planner" className="planner-section">
@@ -86,9 +116,9 @@ function HomePage()  {
             Your next chapter starts with a plan.
           </p>
 
-          <a href="#destinations" className="text-link">
-            Find your destination →
-          </a>
+          <Link to="/plan-trip" className="text-link">
+            Start planning your trip →
+          </Link>
         </section>
 
         <section id="stories" className="section story-section">
@@ -104,7 +134,10 @@ function HomePage()  {
       </main>
 
       <footer className="footer">
-        <a href="#" className="logo">The World, by Me</a>
+        <Link to="/" className="logo">
+          The World, by Me
+        </Link>
+
         <p>Your next chapter might begin somewhere beautiful.</p>
         <p>© 2026 The World, by Me</p>
       </footer>
@@ -116,9 +149,25 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+
       <Route
         path="/destinations/:slug"
         element={<DestinationPage />}
+      />
+
+      <Route
+        path="/activities"
+        element={<ActivitiesPage />}
+      />
+
+      <Route
+        path="/activities/:slug"
+        element={<ActivitiesPage />}
+      />
+
+      <Route
+        path="/plan-trip"
+        element={<PlanTripPage />}
       />
     </Routes>
   );

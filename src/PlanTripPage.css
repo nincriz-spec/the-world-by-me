@@ -1,0 +1,272 @@
+
+.plan-trip-page {
+  min-height: 100vh;
+  background: #F5EFE7;
+  color: #24453D;
+  font-family: "DM Sans", sans-serif;
+}
+
+.plan-trip-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 8%;
+  background: #F5EFE7;
+}
+
+.plan-trip-logo {
+  color: #24453D;
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.plan-trip-nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.plan-trip-nav-links a {
+  color: #24453D;
+  text-decoration: none;
+}
+
+.plan-trip-nav-links a:hover {
+  color: #B97979;
+}
+
+.plan-trip-hero {
+  padding: 85px 20px;
+  text-align: center;
+  background: #24453D;
+  color: #F5EFE7;
+}
+
+.plan-trip-eyebrow {
+  color: #B97979;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.plan-trip-hero h1 {
+  margin: 18px 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 500;
+}
+
+.plan-trip-hero > p:last-child {
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.plan-trip-content {
+  width: 84%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.trip-form-section,
+.trip-options-section,
+.trip-booking-section,
+.trip-itinerary-section {
+  margin-bottom: 65px;
+}
+
+.plan-trip-content h2 {
+  margin: 12px 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 500;
+}
+
+.plan-trip-description {
+  color: #70675F;
+  line-height: 1.8;
+}
+
+.trip-form {
+  max-width: 760px;
+  margin-top: 30px;
+  padding: 30px;
+  border: 1px solid #E3D7C9;
+  border-radius: 12px;
+  background: #FCFAF7;
+}
+
+.trip-form label {
+  display: block;
+  margin: 18px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.trip-form input,
+.trip-form select {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px;
+  border: 1px solid #D9CDBF;
+  border-radius: 6px;
+  background: white;
+  color: #24453D;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.trip-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.create-trip-button,
+.trip-option-card button,
+.trip-option-card > a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #B97979;
+  color: white;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.create-trip-button:hover,
+.trip-option-card button:hover,
+.trip-option-card > a:hover {
+  background: #9E6262;
+}
+
+.trip-option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.trip-option-card {
+  padding: 28px;
+  border: 1px solid #E3D7C9;
+  border-radius: 10px;
+  background: #FCFAF7;
+}
+
+.trip-option-card > span {
+  color: #B97979;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.trip-option-card h3,
+.booking-placeholder h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.trip-option-card p,
+.booking-placeholder p {
+  color: #70675F;
+  line-height: 1.8;
+}
+
+.booking-placeholder {
+  margin-top: 25px;
+  padding: 35px;
+  border: 1px dashed #C5A675;
+  border-radius: 10px;
+  background: #FCFAF7;
+}
+
+.plan-trip-footer {
+  padding: 35px 20px;
+  background: #24453D;
+  color: #F5EFE7;
+  text-align: center;
+}
+
+.plan-trip-footer p {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+}
+
+.plan-trip-footer span {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+@media (max-width: 650px) {
+  .plan-trip-navbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .plan-trip-nav-links {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .plan-trip-content {
+    width: 90%;
+  }
+
+  .trip-form {
+    padding: 20px;
+  }
+
+  .trip-form-row,
+  .trip-option-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Center only the Step 01 form */
+.trip-form {
+  width: 100%;
+  max-width: 720px;
+  margin: 30px auto 0;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Keep form fields aligned inside the centered box */
+.trip-form input,
+.trip-form select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Keep departure and return dates side by side */
+.trip-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* Mobile layout */
+@media (max-width: 650px) {
+  .trip-form {
+    padding: 20px;
+  }
+
+  .trip-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+.plan-trip-tagline {
+  color: #C5A675;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
