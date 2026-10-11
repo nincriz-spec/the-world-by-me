@@ -11,6 +11,7 @@ function PlanTripPage() {
     const [travelers, setTravelers] = useState("2");
     const [travelStyle, setTravelStyle] = useState("Relaxing");
     const [budget, setBudget] = useState("");
+    const [budgetCurrency, setBudgetCurrency] = useState("SGD");
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -30,7 +31,10 @@ function PlanTripPage() {
             return;
         }
 
-        if (Number(budget) < 0 || !Number.isFinite(Number(budget))) {
+        if (
+            Number(budget) < 0 ||
+            !Number.isFinite(Number(budget))
+        ) {
             alert("Please enter a valid travel budget.");
             return;
         }
@@ -41,11 +45,16 @@ function PlanTripPage() {
             returnDate: returnDate,
             travelers: travelers,
             travelStyle: travelStyle,
-            budget: budget
+            budget: budget,
+            budgetCurrency: budgetCurrency
         };
 
         try {
-            sessionStorage.setItem("myTrip", JSON.stringify(tripDetails));
+            sessionStorage.setItem(
+                "myTrip",
+                JSON.stringify(tripDetails)
+            );
+
             alert("Your trip details have been saved for this session!");
         } catch (error) {
             alert("Your trip details could not be saved. Please try again.");
@@ -105,7 +114,9 @@ function PlanTripPage() {
                     </p>
 
                     <form onSubmit={handleSubmit} className="trip-form">
-                        <label htmlFor="destination">Destination</label>
+                        <label htmlFor="destination">
+                            Destination
+                        </label>
 
                         <input
                             id="destination"
@@ -199,22 +210,53 @@ function PlanTripPage() {
                             <option>Food and Lifestyle</option>
                         </select>
 
-                        <label htmlFor="budget">
-                            Estimated total budget (SGD)
-                        </label>
+                        <div className="trip-form-row budget-currency-row">
+                            <div>
+                                <label htmlFor="budget">
+                                    Estimated total budget
+                                </label>
 
-                        <input
-                            id="budget"
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            placeholder="e.g. 2000"
-                            value={budget}
-                            onChange={(event) =>
-                                setBudget(event.target.value)
-                            }
-                            required
-                        />
+                                <input
+                                    id="budget"
+                                    type="number"
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="e.g. 2000"
+                                    value={budget}
+                                    onChange={(event) =>
+                                        setBudget(event.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="budgetCurrency">
+                                    Currency
+                                </label>
+
+                                <select
+                                    id="budgetCurrency"
+                                    value={budgetCurrency}
+                                    onChange={(event) =>
+                                        setBudgetCurrency(event.target.value)
+                                    }
+                                >
+                                    <option value="SGD">SGD — S$</option>
+                                    <option value="PHP">PHP — ₱</option>
+                                    <option value="USD">USD — US$</option>
+                                    <option value="EUR">EUR — €</option>
+                                    <option value="GBP">GBP — £</option>
+                                    <option value="JPY">JPY — ¥</option>
+                                    <option value="MYR">MYR — RM</option>
+                                    <option value="THB">THB — ฿</option>
+                                    <option value="IDR">IDR — Rp</option>
+                                    <option value="AUD">AUD — A$</option>
+                                    <option value="CNY">CNY — ¥</option>
+                                    <option value="KRW">KRW — ₩</option>
+                                </select>
+                            </div>
+                        </div>
 
                         <button
                             type="submit"
