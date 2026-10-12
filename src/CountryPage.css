@@ -1,0 +1,252 @@
+
+.country-page {
+  min-height: 100vh;
+  background: #F5EFE7;
+  color: #24453D;
+  font-family: "DM Sans", sans-serif;
+}
+
+.country-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 7%;
+}
+
+.country-logo {
+  color: #24453D;
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.country-home-link {
+  color: #24453D;
+  text-decoration: none;
+}
+
+.country-hero {
+  padding: 75px 20px;
+  background: linear-gradient(135deg, #24453D, #456D60);
+  color: white;
+  text-align: center;
+}
+
+.country-flag {
+  width: 76px;
+  max-height: 55px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.country-eyebrow {
+  color: #B97979;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.country-hero .country-eyebrow {
+  color: #E6CDA7;
+}
+
+.country-hero h1 {
+  margin: 16px 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.3rem, 6vw, 4.2rem);
+}
+
+.country-hero > p:not(.country-eyebrow) {
+  max-width: 650px;
+  margin: 0 auto 25px;
+  line-height: 1.8;
+}
+
+.country-plan-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  background: #C5A675;
+  color: #24453D;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.country-plan-button:hover {
+  background: #D7BD94;
+}
+
+.country-content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 55px 24px;
+}
+
+.country-facts {
+  margin-bottom: 65px;
+}
+
+.country-facts h2,
+.country-guide-section h2,
+.country-cta h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+}
+
+.country-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.country-facts-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid #E5D8CA;
+  border-radius: 12px;
+  background: #FFFCF8;
+  overflow-wrap: anywhere;
+}
+
+.country-facts-grid span {
+  color: #817D74;
+  font-size: 0.85rem;
+}
+
+.country-facts-grid strong {
+  line-height: 1.5;
+}
+
+.country-guide-section {
+  margin-bottom: 65px;
+}
+
+.country-section-intro {
+  color: #686B62;
+  line-height: 1.8;
+}
+
+.country-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+
+.country-guide-card {
+  overflow: hidden;
+  border: 1px solid #E5D8CA;
+  border-radius: 14px;
+  background: #FFFCF8;
+}
+
+.country-guide-card img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  background: #EAE1D6;
+}
+
+.country-guide-card-content {
+  padding: 22px;
+}
+
+.country-guide-card h3 {
+  margin-top: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.35rem;
+}
+
+.country-guide-card p {
+  color: #686B62;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.country-guide-card a,
+.country-source-link a {
+  color: #24453D;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.country-guide-card a:hover,
+.country-source-link a:hover {
+  text-decoration: underline;
+}
+
+.country-empty,
+.country-guide-message {
+  padding: 16px;
+  border-radius: 8px;
+  background: #EAE1D6;
+  color: #24453D;
+  line-height: 1.7;
+}
+
+.country-source-link {
+  margin-top: 25px;
+}
+
+.country-cta {
+  padding: 55px 20px;
+  border-radius: 16px;
+  background: #EAE1D6;
+  text-align: center;
+}
+
+.country-cta > p:not(.country-eyebrow) {
+  color: #686B62;
+  line-height: 1.8;
+}
+
+.country-footer {
+  padding: 28px 20px;
+  border-top: 1px solid #E5D8CA;
+  color: #686B62;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.country-error {
+  padding: 70px 24px;
+  text-align: center;
+}
+
+@media (max-width: 800px) {
+  .country-guide-grid,
+  .country-facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .country-nav {
+    padding: 18px;
+  }
+
+  .country-logo {
+    font-size: 1.1rem;
+  }
+
+  .country-hero {
+    padding: 55px 18px;
+  }
+
+  .country-content {
+    padding: 40px 18px;
+  }
+
+  .country-guide-grid,
+  .country-facts-grid {
+    grid-template-columns: 1fr;
+  }
+}

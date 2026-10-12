@@ -1,9 +1,218 @@
 
 import "./App.css";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import allCountries from "world-countries";
+
 import DestinationPage from "./DestinationPage";
 import ActivitiesPage from "./ActivitiesPage";
 import PlanTripPage from "./PlanTripPage";
+import PackageTours from "./PackageTours";
+import StoriesPage from "./StoriesPage";
+import CountryPage from "./CountryPage";
+
+const destinationSuggestions = [
+  { name: "Kyoto", country: "Japan" },
+  { name: "Bali", country: "Indonesia" },
+  { name: "Paris", country: "France" },
+  { name: "Rome", country: "Italy" },
+  { name: "Seoul", country: "South Korea" },
+  { name: "Singapore", country: "Singapore" },
+  { name: "Bangkok", country: "Thailand" },
+  { name: "Phuket", country: "Thailand" },
+  { name: "Lucerne", country: "Switzerland" },
+  { name: "Interlaken", country: "Switzerland" },
+  { name: "Sydney", country: "Australia" },
+  { name: "London", country: "United Kingdom" },
+  { name: "New York", country: "United States" },
+  { name: "Dubai", country: "United Arab Emirates" },
+  { name: "Barcelona", country: "Spain" }
+];
+
+function DestinationSearch() {
+  const [search, setSearch] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const navigate = useNavigate();
+
+  // Get country information locally instead of using the old API.
+  const countries = allCountries.map((item) => ({
+    name: item.name,
+    cca3: item.cca3,
+    region: item.region,
+    flags: {
+      emoji: item.flag || "",
+      svg: item.flags?.svg || ""
+    }
+  }));
+
+  const searchText = search.trim().toLowerCase();
+
+  const matchingCountries = searchText
+    ? countries.filter((country) => {
+        return (
+          country.name.common.toLowerCase().includes(searchText) ||
+          country.name.official.toLowerCase().includes(searchText)
+        );
+      })
+    : [];
+
+  const matchingDestinations = searchText
+    ? destinationSuggestions.filter((destination) => {
+        const fullName =
+          destination.name + " " + destination.country;
+
+        return fullName.toLowerCase().includes(searchText);
+      })
+    : [];
+
+  function chooseCountry(country) {
+    if (!country || !country.cca3) {
+      return;
+    }
+
+    setShowSuggestions(false);
+    navigate("/country/" + country.cca3.toLowerCase());
+  }
+
+  function findCountryByName(countryName) {
+    const name = countryName.trim().toLowerCase();
+
+    return countries.find((country) => {
+      return (
+        country.name.common.toLowerCase() === name ||
+        country.name.official.toLowerCase() === name
+      );
+    });
+  }
+
+  // A city search opens the guide for its associated country.
+  function chooseDestination(destination) {
+    const country = findCountryByName(destination.country);
+
+    if (country) {
+      chooseCountry(country);
+    } else {
+      setSearch(destination.country);
+      setShowSuggestions(true);
+    }
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const text = search.trim().toLowerCase();
+
+    if (!text) {
+      return;
+    }
+
+    // First, find an exact country name.
+    const exactCountry = findCountryByName(search);
+
+    if (exactCountry) {
+      chooseCountry(exactCountry);
+      return;
+    }
+
+    // Next, find an exact city or "City, Country" search.
+    const exactDestination = destinationSuggestions.find(
+      (destination) => {
+        return (
+          destination.name.toLowerCase() === text ||
+          (
+            destination.name + ", " + destination.country
+          ).toLowerCase() === text
+        );
+      }
+    );
+
+    if (exactDestination) {
+      chooseDestination(exactDestination);
+      return;
+    }
+
+    // Finally, try a partial country-name match.
+    const partialCountry = countries.find((country) => {
+      return (
+        country.name.common.toLowerCase().startsWith(text) ||
+        country.name.official.toLowerCase().startsWith(text)
+      );
+    });
+
+    if (partialCountry) {
+      chooseCountry(partialCountry);
+      return;
+    }
+
+    // Keep unrecognised searches on the homepage.
+    setShowSuggestions(true);
+  }
+
+  return (
+    <div className="destination-search">
+      <form
+        onSubmit={handleSubmit}
+        className="destination-search-form"
+      >
+        <input
+          type="text"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setShowSuggestions(true);
+          }}
+          onFocus={() => setShowSuggestions(true)}
+          placeholder="Search any country or destination..."
+          aria-label="Search countries and destinations"
+          autoComplete="off"
+        />
+
+        <button type="submit">Search</button>
+      </form>
+
+      {showSuggestions && searchText !== "" && (
+        <div className="destination-suggestions">
+          {matchingCountries.slice(0, 5).map((country) => (
+            <button
+              type="button"
+              key={country.cca3}
+              onClick={() => chooseCountry(country)}
+              className="destination-suggestion"
+            >
+              <span>
+                {country.flags.emoji} {country.name.common}
+              </span>
+              <span>{country.region || "Country"}</span>
+            </button>
+          ))}
+
+          {matchingDestinations.slice(0, 3).map(
+            (destination) => (
+              <button
+                type="button"
+                key={destination.name + destination.country}
+                onClick={() => chooseDestination(destination)}
+                className="destination-suggestion"
+              >
+                <span>{destination.name}</span>
+                <span>{destination.country}</span>
+              </button>
+            )
+          )}
+
+          {matchingCountries.length === 0 &&
+            matchingDestinations.length === 0 && (
+              <p className="destination-search-hint">
+                No suggestions found. Check the spelling or try
+                another country name.
+              </p>
+            )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function HomePage() {
   return (
@@ -15,9 +224,10 @@ function HomePage() {
 
         <div className="nav-links">
           <a href="#destinations">Explore</a>
-          <a href="#stories">Stories</a>
+          <Link to="/stories">Stories</Link>
           <Link to="/plan-trip">Plan a Trip</Link>
           <Link to="/activities">Activities</Link>
+          <Link to="/package-tours">Package Tours</Link>
         </div>
       </nav>
 
@@ -51,6 +261,8 @@ function HomePage() {
             From sunlit coastlines to cities filled with culture,
             discover places worth dreaming about.
           </p>
+
+          <DestinationSearch />
 
           <div className="destination-grid">
             <Link
@@ -151,6 +363,11 @@ function App() {
       <Route path="/" element={<HomePage />} />
 
       <Route
+        path="/country/:slug"
+        element={<CountryPage />}
+      />
+
+      <Route
         path="/destinations/:slug"
         element={<DestinationPage />}
       />
@@ -168,6 +385,16 @@ function App() {
       <Route
         path="/plan-trip"
         element={<PlanTripPage />}
+      />
+
+      <Route
+        path="/package-tours"
+        element={<PackageTours />}
+      />
+
+      <Route
+        path="/stories"
+        element={<StoriesPage />}
       />
     </Routes>
   );

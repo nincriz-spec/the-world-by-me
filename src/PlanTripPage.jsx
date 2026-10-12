@@ -1,17 +1,20 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./PlanTripPage.css";
 import BookingSearch from "./BookingSearch";
 
 function PlanTripPage() {
-    const [destination, setDestination] = useState("");
+
     const [departure, setDeparture] = useState("");
     const [returnDate, setReturnDate] = useState("");
     const [travelers, setTravelers] = useState("2");
     const [travelStyle, setTravelStyle] = useState("Relaxing");
     const [budget, setBudget] = useState("");
     const [budgetCurrency, setBudgetCurrency] = useState("SGD");
+    const [searchParams] = useSearchParams();
+    const [destination, setDestination] = useState(() => {
+        return searchParams.get("destination") || "";
+    });
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -85,6 +88,7 @@ function PlanTripPage() {
                     <Link to="/#stories">Stories</Link>
                     <Link to="/plan-trip">Plan a Trip</Link>
                     <Link to="/activities">Activities</Link>
+                    <Link to="/package-tours">Package Tour</Link>
                 </div>
             </nav>
 
@@ -267,89 +271,12 @@ function PlanTripPage() {
                     </form>
                 </section>
 
-                <section className="trip-options-section">
-                    <p className="plan-trip-eyebrow">
-                        STEP 02 — MAKE IT HAPPEN
-                    </p>
-
-                    <h2>Bring your plans to life.</h2>
-
-                    <p className="plan-trip-description">
-                        Everything you need for a more meaningful journey.
-                    </p>
-
-                    <div className="trip-option-grid">
-                        <article className="trip-option-card">
-                            <span>01</span>
-                            <h3>Find Your Stay</h3>
-                            <p>
-                                Discover hotels and beautiful places to stay.
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    scrollToSection("booking-options")
-                                }
-                            >
-                                Explore Hotels
-                            </button>
-                        </article>
-
-                        <article className="trip-option-card">
-                            <span>02</span>
-                            <h3>Plan Your Flight</h3>
-                            <p>
-                                Prepare for the journey to your destination.
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    scrollToSection("booking-options")
-                                }
-                            >
-                                Explore Flights
-                            </button>
-                        </article>
-
-                        <article className="trip-option-card">
-                            <span>03</span>
-                            <h3>Discover Activities</h3>
-                            <p>
-                                Find memorable experiences at your destination.
-                            </p>
-
-                            <Link to="/activities">
-                                Explore Activities
-                            </Link>
-                        </article>
-
-                        <article className="trip-option-card">
-                            <span>04</span>
-                            <h3>Build Your Itinerary</h3>
-                            <p>
-                                Organize the places you want to visit each day.
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    scrollToSection("itinerary-section")
-                                }
-                            >
-                                Plan My Days
-                            </button>
-                        </article>
-                    </div>
-                </section>
-
                 <section
                     id="booking-options"
                     className="trip-booking-section"
                 >
                     <p className="plan-trip-eyebrow">
-                        STEP 03 — BOOKING
+                        STEP 02 — BOOKING
                     </p>
 
                     <h2>Stay somewhere wonderful.</h2>
@@ -358,7 +285,7 @@ function PlanTripPage() {
                         Find your stay or plan your flight for your next adventure.
                     </p>
 
-                    <BookingSearch />
+                    <BookingSearch initialDestination={destination} />
                 </section>
 
                 <section
@@ -366,7 +293,7 @@ function PlanTripPage() {
                     className="trip-itinerary-section"
                 >
                     <p className="plan-trip-eyebrow">
-                        STEP 04 — YOUR DAYS, YOUR WAY
+                        STEP 03 — YOUR DAYS, YOUR WAY
                     </p>
 
                     <h2>Your journey, day by day.</h2>

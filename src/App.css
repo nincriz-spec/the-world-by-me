@@ -1068,3 +1068,122 @@ html {
     }
 }
 
+/* Destination search */
+.destination-search {
+  position: relative;
+  max-width: 600px;
+  margin: 28px auto 36px;
+  text-align: left;
+  z-index: 5;
+}
+
+.destination-search-form {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #e5d8ca;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(36, 69, 61, 0.08);
+}
+
+.destination-search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #24453d;
+  font: inherit;
+}
+
+.destination-search-form input::placeholder {
+  color: #8c8983;
+}
+
+.destination-search-form button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #24453d;
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.destination-search-form button:hover {
+  background: #355e53;
+}
+
+.destination-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e5d8ca;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(36, 69, 61, 0.12);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.destination-suggestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 14px 16px;
+  border: none;
+  border-bottom: 1px solid #f0e9e1;
+  background: #ffffff;
+  color: #24453d;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.destination-suggestion:last-child {
+  border-bottom: none;
+}
+
+.destination-suggestion:hover {
+  background: #f5efe7;
+}
+
+.destination-suggestion span:last-child {
+  color: #8c8983;
+  font-size: 0.9em;
+}
+
+.destination-search-hint {
+  margin-top: 8px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  color: #24453d;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .destination-search-form {
+    gap: 4px;
+  }
+
+  .destination-search-form input {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  .destination-search-form button {
+    padding: 10px 14px;
+  }
+
+  .destination-suggestion {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+

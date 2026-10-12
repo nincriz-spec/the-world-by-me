@@ -513,3 +513,115 @@ a {
   margin-bottom: 18px;
 }
 
+/* Destination page improvements */
+
+.destination-plan-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 13px 24px;
+  border: 1px solid #C5A675;
+  border-radius: 3px;
+  background: #24453D;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.destination-plan-button:hover {
+  background: #355C50;
+}
+
+.destination-highlights {
+  padding: 70px 6%;
+  background: #FFFFFF;
+}
+
+.destination-highlights > .section-eyebrow,
+.destination-highlights > h2 {
+  text-align: center;
+}
+
+.destination-highlights > h2 {
+  max-width: 700px;
+  margin: 0 auto 35px;
+  color: #24453D;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.destination-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.destination-highlight-card {
+  padding: 28px;
+  border: 1px solid #E6DED4;
+  background: #F5EFE7;
+}
+
+.destination-highlight-card h3 {
+  margin: 0 0 12px;
+  color: #24453D;
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 500;
+}
+
+.destination-highlight-card p {
+  margin: 0;
+  color: #5E665F;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.destination-next-step {
+  padding: 70px 24px;
+  background: #EDE3D8;
+  text-align: center;
+}
+
+.destination-next-step h2 {
+  margin: 0 0 15px;
+  color: #24453D;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+}
+
+.destination-next-step > p {
+  color: #5E665F;
+  line-height: 1.8;
+}
+
+.destination-next-step .destination-home-link {
+  color: #24453D;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .destination-highlights {
+    padding: 50px 20px;
+  }
+
+  .destination-highlights-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .destination-highlight-card {
+    padding: 23px;
+  }
+
+  .destination-next-step {
+    padding: 55px 20px;
+  }
+}

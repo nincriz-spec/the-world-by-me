@@ -1,8 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function BookingSearch() {
+function BookingSearch({ initialDestination = "" }) {
     const [activeTab, setActiveTab] = useState("hotels");
+
+    // Message shown after searching or when validation fails
+    const [message, setMessage] = useState("");
 
     // Hotel details
     const [destination, setDestination] = useState("");
@@ -24,7 +27,19 @@ function BookingSearch() {
         { from: "", to: "", departure: "" }
     ]);
 
-    const [message, setMessage] = useState("");
+    // Tour details
+    const [tourDestination, setTourDestination] = useState("");
+    const [tourDate, setTourDate] = useState("");
+    const [tourGuests, setTourGuests] = useState("2");
+
+    // Fill in the destination from the trip planner
+    useEffect(() => {
+        if (initialDestination.trim()) {
+            setDestination(initialDestination);
+            setTo(initialDestination);
+            setTourDestination(initialDestination);
+        }
+    }, [initialDestination]);
 
     // Today's date in YYYY-MM-DD format
     function getToday() {
@@ -192,16 +207,12 @@ function BookingSearch() {
         }
 
         if (!from.trim() || !to.trim()) {
-            setMessage(
-                "Please enter both your departure and destination."
-            );
+            setMessage("Please enter both your departure and destination.");
             return;
         }
 
         if (from.trim().toLowerCase() === to.trim().toLowerCase()) {
-            setMessage(
-                "Your departure and destination must be different."
-            );
+            setMessage("Your departure and destination must be different.");
             return;
         }
 
@@ -214,14 +225,32 @@ function BookingSearch() {
             tripType === "round-trip" &&
             (!returnDate || returnDate <= departure)
         ) {
-            setMessage(
-                "Your return date must be after your departure date."
-            );
+            setMessage("Your return date must be after your departure date.");
             return;
         }
 
         setMessage(
             `Your ${tripType === "round-trip" ? "round-trip" : "one-way"} flight search is ready from ${from.trim()} to ${to.trim()} for ${passengers} passenger(s). Live flight search and booking are not connected yet.`
+        );
+    }
+
+    // Tour search validation
+    function handleTourSearch(event) {
+        event.preventDefault();
+        setMessage("");
+
+        if (!tourDestination.trim()) {
+            setMessage("Please enter your tour destination.");
+            return;
+        }
+
+        if (!tourDate || tourDate < getToday()) {
+            setMessage("Please choose a valid tour date.");
+            return;
+        }
+
+        setMessage(
+            `Your tour search is ready for ${tourDestination.trim()} on ${tourDate} for ${tourGuests} guest(s). Live tour availability and booking are not connected yet.`
         );
     }
 
@@ -246,9 +275,7 @@ function BookingSearch() {
                             type="button"
                             role="tab"
                             aria-selected={activeTab === "hotels"}
-                            className={`booking-tab ${
-                                activeTab === "hotels" ? "active" : ""
-                            }`}
+                            className={`booking-tab ${activeTab === "hotels" ? "active" : ""}`}
                             onClick={() => changeTab("hotels")}
                         >
                             <span aria-hidden="true">⌂</span> Hotels
@@ -258,12 +285,20 @@ function BookingSearch() {
                             type="button"
                             role="tab"
                             aria-selected={activeTab === "flights"}
-                            className={`booking-tab ${
-                                activeTab === "flights" ? "active" : ""
-                            }`}
+                            className={`booking-tab ${activeTab === "flights" ? "active" : ""}`}
                             onClick={() => changeTab("flights")}
                         >
                             <span aria-hidden="true">✈</span> Flights
+                        </button>
+
+                        <button
+                            type="button"
+                            role="tab"
+                            aria-selected={activeTab === "tours"}
+                            className={`booking-tab ${activeTab === "tours" ? "active" : ""}`}
+                            onClick={() => changeTab("tours")}
+                        >
+                            <span aria-hidden="true">✧</span> Tours
                         </button>
                     </div>
                 </div>
@@ -279,7 +314,6 @@ function BookingSearch() {
                                 <label htmlFor="hotel-destination">
                                     DESTINATION
                                 </label>
-
                                 <input
                                     id="hotel-destination"
                                     type="text"
@@ -293,10 +327,7 @@ function BookingSearch() {
                             </div>
 
                             <div className="booking-field">
-                                <label htmlFor="hotel-checkin">
-                                    CHECK-IN
-                                </label>
-
+                                <label htmlFor="hotel-checkin">CHECK-IN</label>
                                 <input
                                     id="hotel-checkin"
                                     type="date"
@@ -317,10 +348,7 @@ function BookingSearch() {
                             </div>
 
                             <div className="booking-field">
-                                <label htmlFor="hotel-checkout">
-                                    CHECK-OUT
-                                </label>
-
+                                <label htmlFor="hotel-checkout">CHECK-OUT</label>
                                 <input
                                     id="hotel-checkout"
                                     type="date"
@@ -335,10 +363,7 @@ function BookingSearch() {
                             </div>
 
                             <div className="booking-field">
-                                <label htmlFor="hotel-guests">
-                                    GUESTS
-                                </label>
-
+                                <label htmlFor="hotel-guests">GUESTS</label>
                                 <select
                                     id="hotel-guests"
                                     value={guests}
@@ -355,12 +380,8 @@ function BookingSearch() {
                                 </select>
                             </div>
 
-                            <button
-                                type="submit"
-                                className="booking-search-button"
-                            >
-                                Search Hotels{" "}
-                                <span aria-hidden="true">→</span>
+                            <button type="submit" className="booking-search-button">
+                                Search Hotels <span aria-hidden="true">→</span>
                             </button>
                         </form>
                     )}
@@ -378,9 +399,7 @@ function BookingSearch() {
                                         name="booking-trip-type"
                                         value="round-trip"
                                         checked={tripType === "round-trip"}
-                                        onChange={() =>
-                                            changeTripType("round-trip")
-                                        }
+                                        onChange={() => changeTripType("round-trip")}
                                     />
                                     Round trip
                                 </label>
@@ -391,9 +410,7 @@ function BookingSearch() {
                                         name="booking-trip-type"
                                         value="one-way"
                                         checked={tripType === "one-way"}
-                                        onChange={() =>
-                                            changeTripType("one-way")
-                                        }
+                                        onChange={() => changeTripType("one-way")}
                                     />
                                     One way
                                 </label>
@@ -404,9 +421,7 @@ function BookingSearch() {
                                         name="booking-trip-type"
                                         value="multi-city"
                                         checked={tripType === "multi-city"}
-                                        onChange={() =>
-                                            changeTripType("multi-city")
-                                        }
+                                        onChange={() => changeTripType("multi-city")}
                                     />
                                     Multi-city
                                 </label>
@@ -415,44 +430,31 @@ function BookingSearch() {
                             {tripType !== "multi-city" && (
                                 <>
                                     <div className="booking-field">
-                                        <label htmlFor="flight-from">
-                                            FROM
-                                        </label>
-
+                                        <label htmlFor="flight-from">FROM</label>
                                         <input
                                             id="flight-from"
                                             type="text"
                                             placeholder="City or airport"
                                             value={from}
-                                            onChange={(event) =>
-                                                setFrom(event.target.value)
-                                            }
+                                            onChange={(event) => setFrom(event.target.value)}
                                             required
                                         />
                                     </div>
 
                                     <div className="booking-field">
-                                        <label htmlFor="flight-to">
-                                            TO
-                                        </label>
-
+                                        <label htmlFor="flight-to">TO</label>
                                         <input
                                             id="flight-to"
                                             type="text"
                                             placeholder="Where to?"
                                             value={to}
-                                            onChange={(event) =>
-                                                setTo(event.target.value)
-                                            }
+                                            onChange={(event) => setTo(event.target.value)}
                                             required
                                         />
                                     </div>
 
                                     <div className="booking-field">
-                                        <label htmlFor="flight-departure">
-                                            DEPARTURE
-                                        </label>
-
+                                        <label htmlFor="flight-departure">DEPARTURE</label>
                                         <input
                                             id="flight-departure"
                                             type="date"
@@ -462,10 +464,7 @@ function BookingSearch() {
                                                 const value = event.target.value;
                                                 setDeparture(value);
 
-                                                if (
-                                                    returnDate &&
-                                                    returnDate <= value
-                                                ) {
+                                                if (returnDate && returnDate <= value) {
                                                     setReturnDate("");
                                                 }
 
@@ -477,19 +476,14 @@ function BookingSearch() {
 
                                     {tripType === "round-trip" && (
                                         <div className="booking-field">
-                                            <label htmlFor="flight-return">
-                                                RETURN
-                                            </label>
-
+                                            <label htmlFor="flight-return">RETURN</label>
                                             <input
                                                 id="flight-return"
                                                 type="date"
                                                 min={departure || getToday()}
                                                 value={returnDate}
                                                 onChange={(event) => {
-                                                    setReturnDate(
-                                                        event.target.value
-                                                    );
+                                                    setReturnDate(event.target.value);
                                                     setMessage("");
                                                 }}
                                                 required
@@ -502,9 +496,8 @@ function BookingSearch() {
                             {tripType === "multi-city" && (
                                 <div className="multi-city-flights">
                                     <p className="booking-note">
-                                        Plan your journey across multiple
-                                        destinations. Add between 2 and 6
-                                        flight segments.
+                                        Plan your journey across multiple destinations.
+                                        Add between 2 and 6 flight segments.
                                     </p>
 
                                     {flightSegments.map((segment, index) => (
@@ -513,19 +506,13 @@ function BookingSearch() {
                                             key={index}
                                         >
                                             <div className="multi-city-segment-header">
-                                                <h3>
-                                                    Flight {index + 1}
-                                                </h3>
+                                                <h3>Flight {index + 1}</h3>
 
                                                 {flightSegments.length > 2 && (
                                                     <button
                                                         type="button"
                                                         className="remove-flight-button"
-                                                        onClick={() =>
-                                                            removeFlightSegment(
-                                                                index
-                                                            )
-                                                        }
+                                                        onClick={() => removeFlightSegment(index)}
                                                     >
                                                         Remove
                                                     </button>
@@ -533,12 +520,9 @@ function BookingSearch() {
                                             </div>
 
                                             <div className="booking-field">
-                                                <label
-                                                    htmlFor={`multi-from-${index}`}
-                                                >
+                                                <label htmlFor={`multi-from-${index}`}>
                                                     FROM
                                                 </label>
-
                                                 <input
                                                     id={`multi-from-${index}`}
                                                     type="text"
@@ -556,12 +540,9 @@ function BookingSearch() {
                                             </div>
 
                                             <div className="booking-field">
-                                                <label
-                                                    htmlFor={`multi-to-${index}`}
-                                                >
+                                                <label htmlFor={`multi-to-${index}`}>
                                                     TO
                                                 </label>
-
                                                 <input
                                                     id={`multi-to-${index}`}
                                                     type="text"
@@ -579,18 +560,14 @@ function BookingSearch() {
                                             </div>
 
                                             <div className="booking-field">
-                                                <label
-                                                    htmlFor={`multi-date-${index}`}
-                                                >
+                                                <label htmlFor={`multi-date-${index}`}>
                                                     DEPARTURE DATE
                                                 </label>
-
                                                 <input
                                                     id={`multi-date-${index}`}
                                                     type="date"
                                                     min={
-                                                        index > 0 &&
-                                                        flightSegments[index - 1].departure
+                                                        index > 0 && flightSegments[index - 1].departure
                                                             ? flightSegments[index - 1].departure
                                                             : getToday()
                                                     }
@@ -618,23 +595,17 @@ function BookingSearch() {
                                     </button>
 
                                     <p className="booking-note">
-                                        {flightSegments.length} of 6 flight
-                                        segments added
+                                        {flightSegments.length} of 6 flight segments added
                                     </p>
                                 </div>
                             )}
 
                             <div className="booking-field">
-                                <label htmlFor="flight-passengers">
-                                    PASSENGERS
-                                </label>
-
+                                <label htmlFor="flight-passengers">PASSENGERS</label>
                                 <select
                                     id="flight-passengers"
                                     value={passengers}
-                                    onChange={(event) =>
-                                        setPassengers(event.target.value)
-                                    }
+                                    onChange={(event) => setPassengers(event.target.value)}
                                 >
                                     <option value="1">1 passenger</option>
                                     <option value="2">2 passengers</option>
@@ -648,12 +619,67 @@ function BookingSearch() {
                                 </select>
                             </div>
 
-                            <button
-                                type="submit"
-                                className="booking-search-button"
-                            >
-                                Search Flights{" "}
-                                <span aria-hidden="true">→</span>
+                            <button type="submit" className="booking-search-button">
+                                Search Flights <span aria-hidden="true">→</span>
+                            </button>
+                        </form>
+                    )}
+
+                    {activeTab === "tours" && (
+                        <form
+                            className="unified-booking-form"
+                            onSubmit={handleTourSearch}
+                            role="tabpanel"
+                        >
+                            <div className="booking-field">
+                                <label htmlFor="tour-destination">DESTINATION</label>
+                                <input
+                                    id="tour-destination"
+                                    type="text"
+                                    placeholder="Where would you like to explore?"
+                                    value={tourDestination}
+                                    onChange={(event) =>
+                                        setTourDestination(event.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div className="booking-field">
+                                <label htmlFor="tour-date">TOUR DATE</label>
+                                <input
+                                    id="tour-date"
+                                    type="date"
+                                    min={getToday()}
+                                    value={tourDate}
+                                    onChange={(event) => {
+                                        setTourDate(event.target.value);
+                                        setMessage("");
+                                    }}
+                                    required
+                                />
+                            </div>
+
+                            <div className="booking-field">
+                                <label htmlFor="tour-guests">GUESTS</label>
+                                <select
+                                    id="tour-guests"
+                                    value={tourGuests}
+                                    onChange={(event) =>
+                                        setTourGuests(event.target.value)
+                                    }
+                                >
+                                    <option value="1">1 guest</option>
+                                    <option value="2">2 guests</option>
+                                    <option value="3">3 guests</option>
+                                    <option value="4">4 guests</option>
+                                    <option value="5">5 guests</option>
+                                    <option value="6">6+ guests</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" className="booking-search-button">
+                                Search Tours <span aria-hidden="true">→</span>
                             </button>
                         </form>
                     )}

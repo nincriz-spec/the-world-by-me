@@ -58,9 +58,10 @@ function ActivitiesPage() {
                 <div className="nav-links">
                     <Link to="/">Home</Link>
                     <Link to="/destinations/kyoto">Explore</Link>
-                    <a href="#stories">Stories</a>
+                    <Link to="/stories">Stories</Link>
                     <Link to="/plan-trip">Plan a Trip</Link>
                     <Link to="/activities">Activities</Link>
+                    <Link to="/package-tours">Package Tour</Link>
                 </div>
             </nav>
 
