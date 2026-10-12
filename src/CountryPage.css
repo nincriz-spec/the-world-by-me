@@ -250,3 +250,79 @@
     grid-template-columns: 1fr;
   }
 }
+
+.country-loading {
+  padding: 70px 24px;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.country-budget-section {
+  margin-bottom: 65px;
+  padding: 32px;
+  border: 1px solid #E5D8CA;
+  border-radius: 16px;
+  background: #FFFCF8;
+}
+
+.country-budget-section h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+}
+
+.country-budget-section > p:not(.country-eyebrow) {
+  color: #686B62;
+  line-height: 1.8;
+}
+
+.country-budget-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.country-budget-grid article {
+  padding: 22px;
+  border: 1px solid #E5D8CA;
+  border-radius: 12px;
+  background: #F5EFE7;
+}
+
+.country-budget-grid h3 {
+  margin-top: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+}
+
+.country-budget-grid p {
+  margin-bottom: 0;
+  color: #686B62;
+  line-height: 1.7;
+}
+
+.country-budget-note {
+  margin-top: 22px;
+  font-size: 0.9rem;
+}
+
+.country-budget-section .country-guide-grid {
+  margin-top: 24px;
+}
+
+@media (max-width: 800px) {
+  .country-budget-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .country-budget-section {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .country-budget-section {
+    padding: 20px;
+  }
+}
+
